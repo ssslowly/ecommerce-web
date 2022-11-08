@@ -35,6 +35,16 @@ function ready(){
       var button = addCart[i];
       button.addEventListener("click", addCartClicked);
    }
+   document.getElementsByClassName("btn-buy")[0].addEventListener("click", buyButtonClicked);
+}
+
+function buyButtonClicked(){
+   alert("Ваш заказ размещен");
+   var cartContent = document.getElementsByClassName("cart-content")[0];
+   while(cartContent.hasChildNodes()){
+      cartContent.removeChild(cartContent.firstChild);
+   }
+   updatetotal();
 }
 
 function removeCartItem(event){
@@ -71,10 +81,10 @@ function addProductToCart(title, price, productImg){
       }
    }
 var cartBoxContent = `
-                        <img src="img/tshirt_oversize.jpg" alt="" class="cart-img">
+                        <img src="${productImg}" alt="" class="cart-img">
                         <div class="detail-box">
-                            <div class="cart-product-title">Футболка оверсайз</div>
-                            <div class="cart-price">10000₸</div>
+                            <div class="cart-product-title">${title}</div>
+                            <div class="cart-price">${price}</div>
                             <input type="number" value="1" class="cart-quantity">
                         </div>
                         <i class='bx bxs-trash-alt cart-remove'></i>`;
@@ -95,7 +105,8 @@ function updatetotal(){
       var price = parseFloat(priceElement.innerText.replace("₸", ""));
       var quantity = quantityElement.value;
       total = total + price * quantity;
-      total = Math.round(total *100) / 100; // для чисел с остатками
-      document.getElementsByClassName("total-price")[0].innerText = "₸" + total;
    }
+      total = Math.round(total *100) / 100; // для дробных чисел
+      document.getElementsByClassName("total-price")[0].innerText = "₸" + total;
+   
 }
